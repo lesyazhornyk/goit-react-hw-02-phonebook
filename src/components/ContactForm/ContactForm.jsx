@@ -1,4 +1,5 @@
-import { Formik, Field, Form } from 'formik';
+import { Formik } from 'formik';
+import { StyledForm, StyledField } from './ContactForm.styled';
 
 const ContactForm = ({ onSubmitForm }) => {
   return (
@@ -8,13 +9,13 @@ const ContactForm = ({ onSubmitForm }) => {
         onSubmitForm(values.name, values.number);
       }}
     >
-      <Form>
+      <StyledForm>
         <label htmlFor="name">Name</label>
-        <Field name="name" type="text" required />
+        <StyledField name="name" type="text" required />
         <label htmlFor="number">Number</label>
-        <Field name="number" type="tel" required />
+        <StyledField name="number" type="tel" required />
         <button type="submit">Add Contact</button>
-      </Form>
+      </StyledForm>
     </Formik>
   );
 };

@@ -2,6 +2,8 @@ import { Component } from 'react';
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
+import { Name } from './ContactForm/ContactForm.styled';
+import { NameItem } from './ContactForm/ContactForm.styled';
 
 export class App extends Component {
   state = {
@@ -18,7 +20,20 @@ export class App extends Component {
     this.setState({ filter: name });
   };
 
+  deleteContact = id => {
+    this.setState(prevState => {
+      return {
+        contacts: prevState.contacts.filter(contact => contact.id !== id),
+      };
+    });
+  };
+
   onAddContact = (name, number) => {
+    if (this.state.contacts.some(contact => contact.name === name)) {
+      alert(`${name} is already in contacts.`);
+      return;
+    }
+
     const id = Math.random().toString(16).slice(2);
 
     this.setState(prevState => {
@@ -40,15 +55,16 @@ export class App extends Component {
           marginLeft: '40px',
         }}
       >
-        <h1>Phonebook</h1>
+        <Name>Phonebook</Name>
         <ContactForm onSubmitForm={this.onAddContact} />
 
-        <h2>Contacts</h2>
+        <NameItem>Contacts</NameItem>
         <Filter findByName={this.findByName} />
         <ContactList
           contacts={this.state.contacts.filter(contact =>
             contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
           )}
+          onDeleteItem={this.deleteContact}
         />
       </div>
     );
