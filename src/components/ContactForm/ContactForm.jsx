@@ -5,8 +5,9 @@ const ContactForm = ({ onSubmitForm }) => {
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
-      onSubmit={values => {
+      onSubmit={(values, { resetForm }) => {
         onSubmitForm(values.name, values.number);
+        resetForm();
       }}
     >
       <StyledForm>
